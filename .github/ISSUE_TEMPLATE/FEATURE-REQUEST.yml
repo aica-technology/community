@@ -1,0 +1,39 @@
+name: Feature Request
+description: Ideas or suggestions for brand new functionality or features
+type: Feature
+assignees:
+  - eeberhard
+  - domire8
+  - rrosa24
+body:
+  - type: markdown
+    attributes:
+      value: |
+        To submit a feature request,
+        1. Check if a similar request has already been submitted (search existing issues using the filter `type:Feature`)
+        2. Update the issue title above with a description of the request (e.g., `There should be...`)
+        3. Fill out the form fields below
+        4. Press Submit
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please give a description of the requested new feature
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Who would benefit?
+      description: Please justify the request by describing who would benefit from this new feature
+    validations:
+      required: true
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Supporting information
+      description: Include any additional supporting information or attachments
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting a feature request! A member of the AICA team will look into it as soon as possible.

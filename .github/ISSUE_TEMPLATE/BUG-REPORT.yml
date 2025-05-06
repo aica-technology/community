@@ -1,0 +1,56 @@
+name: Bug Report
+description: Submit a bug report
+type: Bug
+assignees:
+  - eeberhard
+  - domire8
+  - rrosa24
+body:
+  - type: markdown
+    attributes:
+      value: |
+        To submit a bug report,
+        1. Check if the bug has already been reported (search existing issues using the filter `type:Bug`)
+        2. Update the issue title above with a description of the bug (e.g., `Component XYZ crashes when...`)
+        3. Fill out the form fields below
+        4. Press Submit
+  - type: textarea
+    id: manifest
+    attributes:
+      label: System configuration
+      description: Specify the affected AICA Core version and the name and versions of any packages if related to the issue. You may also paste a screenshot of the Launcher configuration showing the core version and packages.
+      placeholder: |
+        Core v1.2.3
+        Affected packages: ur-collection v1.2.3
+        (or paste a Launcher screenshot here)
+    validations:
+      required: true
+  - type: textarea
+    id: brief-description
+    attributes:
+      label: Brief description
+      description: Give a brief description of the bug
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Describe the steps to reproduce the bug
+    validations:
+      required: true
+  - type: textarea
+    id: log-output
+    attributes:
+      label: Relevant log output
+      description: Copy and paste any relevant log output resulting from the bug
+      render: Shell
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Supporting information
+      description: Include any additional supporting information or attachments
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting a bug report! A member of the AICA team will look into it as soon as possible.

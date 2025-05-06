@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: AICA Documentation
+    url: https://docs.aica.tech
+    about: Find more developer information on the AICA documentation page
+  - name: AICA Website
+    url: https://aica.tech
+    about: Find more product information on the AICA website

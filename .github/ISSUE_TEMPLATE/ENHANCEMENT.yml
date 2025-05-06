@@ -1,0 +1,46 @@
+name: Enhancement
+description: Suggest an improvement or enhancement to an existing feature
+type: Enhancement
+assignees:
+  - eeberhard
+  - domire8
+  - rrosa24
+body:
+  - type: markdown
+    attributes:
+      value: |
+        To submit feedback,
+        1. Check if a similar request has already been submitted (search existing issues using the filter `type:Enhancement`)
+        2. Update the issue title above with a description of the request (e.g., `Component XYZ should have...`)
+        3. Fill out the form fields below
+        4. Press Submit
+  - type: textarea
+    id: feature
+    attributes:
+      label: Affected Feature
+      description: Please indicate the existing feature or product that needs enhancement
+    validations:
+      required: true
+  - type: textarea
+    id: enhancement
+    attributes:
+      label: Enhancement
+      description: Please describe your request for how we could improve this feature
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Who would benefit?
+      description: Please justify the request by describing who would benefit from this feature or change
+    validations:
+      required: true
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Supporting information
+      description: Include any additional supporting information or attachments
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting your feedback! A member of the AICA team will look into it as soon as possible.
