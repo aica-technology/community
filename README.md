@@ -19,7 +19,7 @@ For the roadmap view, please refer to the [Planned Feedback Roadmap](https://git
 
 - React: Use GitHub reactions to upvote feedback/features that excite you.
 - Comment: Share your thoughts, suggestions, or use cases in the comments under specific feedback/features.
-- Submit Ideas: Have an idea that's not listed? Submit a feature request using our [issue form]([https://github.com/aica-technology/api/issues/new/choose](https://github.com/aica-technology/community/issues/new/choose )
+- Submit Ideas: Have an idea that's not listed? Submit a feature request using our [issue form](https://github.com/aica-technology/community/issues/new/choose)
 
 **How we use this roadmap:**
 This roadmap is a living document. While we aim to stick to our plans, timelines and priorities may shift. We will do our best to move features to the appropriate version accordingly.
