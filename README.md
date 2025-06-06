@@ -26,5 +26,5 @@ This roadmap is a living document. While we aim to stick to our plans, timelines
 
 ## Dive deeper with AICA Discussions!💬
 
-Refer to the organization-level [Discussions board](https://github.com/orgs/aica-technology/discussions) for release announcements and more Q&A style threads for members to share
-examples, ideas and questions.
+Refer to the organization-level [Discussions board](https://github.com/orgs/aica-technology/discussions) for release announcements and more Q&A style threads for users to share
+examples and questions.
