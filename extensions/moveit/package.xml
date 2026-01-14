@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>aica_moveit</name>
+  <version>0.1.0</version>
+  <description>Meta package that contains essential packages and dependencies of MoveIt 2</description>
+  <maintainer email="dominic@aica.tech">Dominic Reber</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+
+  <depend>moveit_configs_utils</depend>
+  <depend>moveit_kinematics</depend>
+  <depend>moveit_planners</depend>
+  <depend>moveit_planners_chomp</depend>
+  <depend>moveit_ros_move_group</depend>
+  <depend>moveit_ros_visualization</depend>
+  <depend>moveit_servo</depend>
+  <depend>moveit_simple_controller_manager</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

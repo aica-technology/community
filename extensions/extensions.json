@@ -1,3 +1,7 @@
 {
-  "extensions": []
+  "extensions": [
+    {
+      "path": "extensions/moveit"
+    }
+  ]
 }

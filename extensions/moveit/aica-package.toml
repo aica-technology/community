@@ -1,0 +1,12 @@
+#syntax=ghcr.io/aica-technology/package-builder:v1.6.1
+
+[metadata]
+version = "0.1.0"
+description = "Meta package that contains essential packages and dependencies of MoveIt 2"
+
+[build]
+type = "ros"
+image = "v2.0.6-jazzy"
+
+[build.packages.moveit]
+name = "moveit"
