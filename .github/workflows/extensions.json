@@ -2,6 +2,9 @@
   "extensions": [
     {
       "path": "extensions/moveit"
+    },
+    {
+      "path": "extensions/topic_based_ros2_control"
     }
   ]
 }

@@ -1,0 +1,15 @@
+#syntax=ghcr.io/aica-technology/package-builder:v1.6.1
+
+[metadata]
+version = "0.1.0"
+description = """
+A ROS 2 package for integrating a ros2_control hardware interface with a system that uses topics to command the robot
+and publish its state
+"""
+
+[build]
+type = "ros"
+image = "v2.0.6-jazzy"
+
+[build.packages.topic_based_ros2_control]
+source = "git://github.com/PickNikRobotics/topic_based_ros2_control#0.3.0"
