@@ -1,0 +1,60 @@
+name: Build and release extensions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  get-extensions:
+    runs-on: ubuntu-latest
+    name: Get extensions
+    outputs:
+      extensions: ${{ steps.get-extensions.outputs.extensions }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: List all extensions that have changes
+        id: get-extensions
+        run: |
+          if [ -x "$(command -v yq)" ]; then
+            echo "yq already installed"
+          else
+            VERSION=v4.40.5
+            BINARY=yq_linux_amd64
+            wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
+              tar xz && mv ${BINARY} /usr/bin/yq
+          fi
+
+          CHANGED_ITEMS_LIST=""
+          ITEMS_LIST=($(jq -r '.extensions[].path' .github/workflows/extensions.json))
+          for ITEM in "${ITEMS_LIST[@]}"; do
+            DIFF=$(git diff HEAD^ -- "${ITEM}")
+            if [ ! -z "${DIFF}" ]; then
+              CHANGED_ITEMS_LIST+="\"$ITEM\","
+            fi
+          done
+          if ! [ -z "${CHANGED_ITEMS_LIST}" ]; then
+            ITEMS="[${CHANGED_ITEMS_LIST::-1}]"
+            echo "Extensions: $ITEMS"
+            echo "extensions=$ITEMS" >> $GITHUB_OUTPUT
+          else
+            echo "::notice No extensions have changed"
+          fi
+        shell: bash
+
+  build:
+    needs: get-extensions
+    if: ${{ needs.get-extensions.outputs.extensions }}
+    strategy:
+      fail-fast: false
+      matrix:
+        extension: ${{ fromJSON(needs.get-extensions.outputs.extensions) }}
+
+    name: Build and publish ${{ matrix.extension }} image
+    uses: ./.github/workflows/build-release.yml
+    with:
+      extension_path: ${{ matrix.extension }}
+    secrets: inherit
