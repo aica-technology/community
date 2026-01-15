@@ -42,7 +42,7 @@ jobs:
           if [ -x "$(command -v yq)" ]; then
             echo "yq already installed"
           else
-            VERSION=v4.40.5
+            VERSION=v4.40.7
             BINARY=yq_linux_amd64
             wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
               tar xz && mv ${BINARY} /usr/bin/yq
@@ -54,30 +54,28 @@ jobs:
           echo "Version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-          # check if extension is a collection
-          value=$(yq -r '.metadata.collection.name' "${EXT_PATH}")
-          if [ "$value" != "null" ]; then
-            echo "Name: $value"
-            echo "name=$value" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          # otherwise it's a single package
-          if yq '.build.packages | length > 0' "${EXT_PATH}" > /dev/null; then
-            value=$(yq -r '.build.packages | to_entries | .[0].value.name' "${EXT_PATH}")
-            if [ "$value" != "null" ]; then
-              echo "Name: $value"
-              echo "name=$value" >> $GITHUB_OUTPUT
-              exit 0
+          NAME=""
+          queries=(
+            '.metadata.collection.name'
+            '.build.packages | to_entries | .[0].value.name'
+            '.build.packages | keys | .[0]'
+          )
+          for q in "${queries[@]}"; do
+            if [ -n "$NAME" ]; then
+              break
             fi
-            value=$(yq -r '.build.packages | keys | .[0]' "${EXT_PATH}")
-            if [ "$value" != "null" ]; then
-              echo "Name: $value"
-              echo "name=$value" >> $GITHUB_OUTPUT
-              exit 0
+            value=$(yq -r "$q" "$EXT_PATH")
+            if [ "$value" != "null" ] && [ -n "$value" ]; then
+              NAME="$value"
             fi
+          done
+          if [ -z "$NAME" ]; then
+            echo "::error file="$EXT_PATH"::Invalid aica-package.toml - missing name"
+            exit 1
           fi
-          echo "::error file="$EXT_PATH"::Invalid aica-package.toml - missing name"
-          exit 1
+          NAME="${NAME//_/-}"
+          echo "Name: $NAME"
+          echo "name=$NAME" >> $GITHUB_OUTPUT
         id: parse-toml
         shell: bash
 
