@@ -82,7 +82,7 @@ jobs:
       - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v1.0.4
         id: ensure-image
         with:
-          image_name: aica-technology/${{ steps.parse-toml.outputs.name }} # TODO do we want to replace _ with -?
+          image_name: aica-technology/${{ steps.parse-toml.outputs.name }}
 
   build:
     needs: metadata
