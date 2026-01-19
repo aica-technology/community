@@ -33,6 +33,7 @@ jobs:
     if: ${{ needs.check-version.outputs.has_changed == 'true' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     outputs:
+      name: ${{ steps.parse-toml.outputs.name }}
       image_name: ${{ steps.ensure-image.outputs.image_name }}
       image_tag: ${{ steps.parse-toml.outputs.version }}
     steps:
@@ -128,4 +129,4 @@ jobs:
 
       - uses: aica-technology/.github/.github/actions/git-tag@v1.0.4
         with:
-          tag: ${{ needs.check-version.outputs.version }}
+          tag: ${{ needs.metadata.outputs.name }}/${{ needs.check-version.outputs.version }}
