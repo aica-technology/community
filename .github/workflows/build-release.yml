@@ -52,6 +52,9 @@ jobs:
           EXT_PATH="${{ inputs.extension_path }}/aica-package.toml"
 
           VERSION=$(yq -r '.metadata.version' "${EXT_PATH}")
+          if [ "${VERSION:0:1}" != "v" ]; then
+            VERSION="v$VERSION"
+          fi
           echo "Version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 

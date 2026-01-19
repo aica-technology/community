@@ -8,5 +8,5 @@ extension and have to be developed on top (for example, through the
 To use this in your AICA System configuration, add the following custom extension:
 
 ```
-@aica/foss/moveit:v0.1.0
+"@aica/foss/moveit" = "v0.1.0"
 ```
