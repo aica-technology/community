@@ -1,0 +1,131 @@
+name: Build and release an extension
+
+on:
+  workflow_call:
+    inputs:
+      extension_path:
+        description: Path to the extension to build (relative to repository root)
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      extension_path:
+        description: Path to the extension to build (relative to repository root)
+        required: true
+        type: string
+
+jobs:
+  check-version:
+    name: Check if version has changed
+    outputs:
+      has_changed: ${{ steps.check.outputs.has_changed }}
+      version: ${{ steps.check.outputs.version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aica-technology/.github/.github/actions/check-version-toml@v1.0.4
+        with:
+          package_path: ${{ inputs.extension_path }}
+        id: check
+
+  metadata:
+    name: Get metadata
+    needs: check-version
+    if: ${{ needs.check-version.outputs.has_changed == 'true' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    outputs:
+      image_name: ${{ steps.ensure-image.outputs.image_name }}
+      image_tag: ${{ steps.parse-toml.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - run: |
+          if [ -x "$(command -v yq)" ]; then
+            echo "yq already installed"
+          else
+            VERSION=v4.40.7
+            BINARY=yq_linux_amd64
+            wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
+              tar xz && mv ${BINARY} /usr/bin/yq
+          fi
+
+          EXT_PATH="${{ inputs.extension_path }}/aica-package.toml"
+
+          VERSION=$(yq -r '.metadata.version' "${EXT_PATH}")
+          echo "Version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          NAME=""
+          queries=(
+            '.metadata.collection.name'
+            '.build.packages | to_entries | .[0].value.name'
+            '.build.packages | keys | .[0]'
+          )
+          for q in "${queries[@]}"; do
+            if [ -n "$NAME" ]; then
+              break
+            fi
+            value=$(yq -r "$q" "$EXT_PATH")
+            if [ "$value" != "null" ] && [ -n "$value" ]; then
+              NAME="$value"
+            fi
+          done
+          if [ -z "$NAME" ]; then
+            echo "::error file="$EXT_PATH"::Invalid aica-package.toml - missing name"
+            exit 1
+          fi
+          NAME="${NAME//_/-}"
+          echo "Name: $NAME"
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+        id: parse-toml
+        shell: bash
+
+      - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v1.0.4
+        id: ensure-image
+        with:
+          image_name: aica-technology/${{ steps.parse-toml.outputs.name }}
+
+  build:
+    needs: metadata
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+        include:
+          - image: ubuntu-latest
+          - image: buildjet-4vcpu-ubuntu-2204-arm
+            arch: arm64
+
+    runs-on: ${{ matrix.image }}
+    name: Build and publish (${{ matrix.arch }})
+    steps:
+      - uses: actions/checkout@v4 # do not upgrade as buildjet doesn't have node24
+
+      - uses: aica-technology/.github/.github/actions/list-add-suffixes@v1.0.4
+        id: merge-tags
+        with:
+          list: ${{ needs.metadata.outputs.image_tag }}
+          suffixes: ${{ matrix.arch }}
+          glue_separator: "-"
+
+      - uses: aica-technology/.github/.github/actions/ghcr-build@v1.0.4
+        with:
+          build_context_path: ${{ inputs.extension_path }}
+          dockerfile_path: ${{ inputs.extension_path }}/aica-package.toml
+          image_name: ${{ needs.metadata.outputs.image_name }}
+          image_tags: ${{ steps.merge-tags.outputs.list }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  multi-arch:
+    runs-on: ubuntu-latest
+    name: Merge into a multi-arch image
+    needs: [check-version, metadata, build]
+    steps:
+      - uses: aica-technology/.github/.github/actions/ghcr-manifest-merge@v1.0.4
+        with:
+          image_name: ${{ needs.metadata.outputs.image_name }}
+          image_tags: ${{ needs.metadata.outputs.image_tag }}
+          archs: amd64,arm64
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: aica-technology/.github/.github/actions/git-tag@v1.0.4
+        with:
+          tag: ${{ needs.check-version.outputs.version }}
