@@ -5,7 +5,7 @@
   <version>0.1.0</version>
   <description>Meta package that contains essential packages and dependencies of MoveIt 2</description>
   <maintainer email="dominic@aica.tech">Dominic Reber</maintainer>
-  <license>TODO: License declaration</license>
+  <license>BSD-3-Clause</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
