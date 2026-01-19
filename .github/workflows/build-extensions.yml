@@ -29,7 +29,7 @@ jobs:
           fi
 
           CHANGED_ITEMS_LIST=""
-          ITEMS_LIST=($(jq -r '.extensions[].path' .github/workflows/extensions.json))
+          ITEMS_LIST=($(jq -r '.extensions[].path' ./extensions/extensions.json))
           for ITEM in "${ITEMS_LIST[@]}"; do
             DIFF=$(git diff HEAD^ -- "${ITEM}")
             if [ ! -z "${DIFF}" ]; then
