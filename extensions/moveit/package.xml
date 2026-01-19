@@ -16,6 +16,7 @@
   <depend>moveit_ros_move_group</depend>
   <depend>moveit_ros_visualization</depend>
   <depend>moveit_servo</depend>
+  <depend>moveit_setup_assistant</depend>
   <depend>moveit_simple_controller_manager</depend>
 
   <export>
