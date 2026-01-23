@@ -1,0 +1,14 @@
+#syntax=ghcr.io/aica-technology/package-builder:v1.6.1
+
+[metadata]
+version = "0.1.0"
+description = ""
+
+[build]
+type = "ros"
+image = "v2.0.6-jazzy"
+
+[build.packages.web_video_server]
+
+[build.packages.web_video_server.dependencies.apt]
+"ros-jazzy-web-video-server" = "*"
