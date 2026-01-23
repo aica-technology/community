@@ -5,8 +5,18 @@ the use of advanced motion planning and manipulation capabilities. Hardware-spec
 extension and have to be developed on top (for example, through the
 [MoveIt Setup Assistant](https://moveit.picknik.ai/main/doc/examples/setup_assistant/setup_assistant_tutorial.html)).
 
-To use this in your AICA System configuration, add the following custom extension:
+## Add to AICA System configuration
+
+If you are using AICA Launcher, add the following Custom Package:
 
 ```
+ghcr.io/aica-technology/moveit:v0.1.0
+```
+
+If you are building AICA Core manually with an `aica-application.toml`, add this under `[packages]`:
+
+```
+[packages]
+# other extensions
 "@aica/foss/moveit" = "v0.1.0"
 ```
