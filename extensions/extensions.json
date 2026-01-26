@@ -5,6 +5,9 @@
     },
     {
       "path": "extensions/topic_based_ros2_control"
+    },
+    {
+      "path": "extensions/web_video_server"
     }
   ]
 }
