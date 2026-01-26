@@ -1,13 +1,13 @@
 # Web Video Server
 
 This extension integrates the [Web Video Server](https://github.com/RobotWebTools/web_video_server)
-package to the AICA System, making it possible to see ROS 2 image topics while this feature is not supported natively
-in AICA Studio.
+package to the AICA System, making it possible to see ROS 2 image topics for versions of AICA Studio that do not yet
+natively support image and video visualizations.
 
 After adding this extension to your AICA System configuration, open a terminal in the running AICA Core and run
 
 ```
-ros2 run web_video_server web_video_server --ros-args -p address:=<address> -p port:=8081
+ros2 run web_video_server web_video_server --ros-args -p port:=8081
 ```
 
 For more information, refer to
