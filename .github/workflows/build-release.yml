@@ -101,7 +101,7 @@ jobs:
     runs-on: ${{ matrix.image }}
     name: Build and publish (${{ matrix.arch }})
     steps:
-      - uses: actions/checkout@v4 # do not upgrade as buildjet doesn't have node24
+      - uses: actions/checkout@v6
 
       - uses: aica-technology/.github/.github/actions/list-add-suffixes@v1.0.4
         id: merge-tags
