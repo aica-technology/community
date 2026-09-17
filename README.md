@@ -1,10 +1,13 @@
-#  Community
+> [!IMPORTANT]
+> This organization and its content are not affiliated, associated, authorized, endorsed by, or in any way officially connected with aicas GmbH, Karlsruhe, Germany (www.aicas.com and https://github.com/aicas). Any references to “AICA” are strictly historic.
+
+# Community
 
 This is the home of the Community Feedback & Public Roadmap.
 
 ## Welcome to the Public Roadmap! 🚀
 
-This roadmap is a transparent view of the features and improvements we’re planning and a space for you to provide feedback and share your own ideas. We aim to keep our community informed, engaged, and involved in shaping the direction of the platform. 
+This roadmap is a transparent view of the features and improvements we’re planning and a space for you to provide feedback and share your own ideas. We aim to keep our community informed, engaged, and involved in shaping the direction of the platform.
 
 **What you'll find here:**
 You will find all feature requests as well as internal quarterly initiatives in the [Feedback & Initiative tracker](https://github.com/orgs/aica-technology/projects/4/views/8)
