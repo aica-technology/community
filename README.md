@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> Please note that this company is not affiliated, associated, authorized, endorsed by, or in any way officially connected with aicas GmbH. Any references to "AICA" are strictly historical.
+
 # AICA Community
 
 This is the home of the AICA Community Feedback & Public Roadmap.
